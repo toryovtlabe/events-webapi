@@ -1,0 +1,23 @@
+name: events-webapi
+services:
+  events:
+    image: ${DOCKER_REGISTRY-}events
+    build:
+      context: .
+      dockerfile: Events/Dockerfile
+  postgresdb:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: events
+      POSTGRES_PASSWORD: events
+      POSTGRES_DB: events
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+  adminer:
+    image: adminer:latest
+    ports:
+      - 8081:8080
+volumes:
+  postgres_data:
