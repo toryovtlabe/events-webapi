@@ -39,7 +39,7 @@ namespace Events.Controllers
             return _subService.GetUserById(id);
         }
 
-        [HttpGet("/unregister/{eventId}")]
+        [HttpDelete("/unregister/{eventId}")]
         [Authorize]
         public IActionResult DeleteSubscription(int eventId)
         {

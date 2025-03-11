@@ -48,6 +48,10 @@ namespace Events
                 };
             });
 
+            builder.Services.AddAuthorizationBuilder()
+                .AddPolicy("AdminPolicy", policy => policy.RequireRole("Admin"))
+                .AddPolicy("UserPolicy", policy => policy.RequireRole("User"));
+
             builder.Services.AddScoped<UserRepository>();
             builder.Services.AddScoped<EventRepository>();
             builder.Services.AddScoped<CategoryRepository>();

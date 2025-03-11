@@ -2,6 +2,7 @@
 using Business.DTO;
 using Business.Services;
 using Events.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Events.Controllers
@@ -28,6 +29,7 @@ namespace Events.Controllers
         }
 
         [HttpPost("/create")]
+        [Authorize(Policy = "AdminPolicy")]
         public IActionResult Create([FromBody] EventModel eventModel)
         {
             EventDTO eventDTO = _mapper.Map<EventDTO>(eventModel);
@@ -36,6 +38,7 @@ namespace Events.Controllers
         }
 
         [HttpPut("/update/{id}")]
+        [Authorize(Policy = "AdminPolicy")]
         public IActionResult Update([FromBody] EventModel eventModel, int id)
         {
             EventDTO eventDTO = _mapper.Map<EventDTO>(eventModel);
@@ -44,12 +47,14 @@ namespace Events.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Policy = "AdminPolicy")]
         public IActionResult Delete(int id)
         {
             _eventService.DeleteEvent(id);
             return NoContent();
         }
         [HttpPost("{id}/upload-image")]
+        [Authorize(Policy = "AdminPolicy")]
         public async Task<IActionResult> UploadImage(int id,[FromBody] string imageBase64)
         {
             await _eventService.UploadImage(id, imageBase64);
